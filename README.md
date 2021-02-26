@@ -1,1 +1,2 @@
-# fullstack-react-dotnet-efcore
+# Fullstack React .Net Demo 
+## Featuring Entity Framework
