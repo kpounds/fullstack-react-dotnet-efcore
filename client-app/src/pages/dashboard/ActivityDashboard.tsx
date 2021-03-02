@@ -7,16 +7,26 @@ import ActivityList from "./components/ActivityList"
 
 interface IActivityDashboardProps {
   activities: IActivity[]
+  selectedActivity?: IActivity
+  selectActivity: (id: string) => void
+  cancelSelectActivity: () => void
 }
 
-const ActivityDashboard: FunctionComponent<IActivityDashboardProps> = ({ activities }) => {
+const ActivityDashboard: FunctionComponent<IActivityDashboardProps> = ({
+  activities,
+  selectedActivity,
+  selectActivity,
+  cancelSelectActivity,
+}) => {
   return (
     <Grid>
       <Grid.Column width="10">
-        <ActivityList activities={activities} />
+        <ActivityList activities={activities} selectActivity={selectActivity} />
       </Grid.Column>
       <Grid.Column width="6">
-        {activities[0] && <ActivityDetails activity={activities[0]} />}
+        {selectedActivity && (
+          <ActivityDetails activity={selectedActivity} cancelSelectActivity={cancelSelectActivity} />
+        )}
         <ActivityForm />
       </Grid.Column>
     </Grid>

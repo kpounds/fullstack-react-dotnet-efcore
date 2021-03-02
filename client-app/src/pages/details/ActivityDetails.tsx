@@ -4,9 +4,10 @@ import { IActivity } from "../../models/activity"
 
 interface IActivityDetailsProps {
   activity: IActivity
+  cancelSelectActivity: () => void
 }
 
-const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity }) => {
+const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity, cancelSelectActivity }) => {
   return (
     <Card fluid>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
@@ -20,7 +21,7 @@ const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity })
       <Card.Content extra>
         <Button.Group widths="2">
           <Button basic color="blue" content="Edit" />
-          <Button basic color="grey" content="Cancel" />
+          <Button onClick={cancelSelectActivity} basic color="grey" content="Cancel" />
         </Button.Group>
       </Card.Content>
     </Card>
