@@ -4,11 +4,12 @@ import { IActivity } from "../../models/activity"
 
 interface IActivityFormProps {
   selectedActivity?: IActivity
+  submitting: boolean
   closeForm: () => void
   createOrEdit: (activity: IActivity) => void
 }
 
-const ActivityForm = ({ selectedActivity, closeForm, createOrEdit }: IActivityFormProps) => {
+const ActivityForm = ({ selectedActivity, submitting, closeForm, createOrEdit }: IActivityFormProps) => {
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -43,7 +44,7 @@ const ActivityForm = ({ selectedActivity, closeForm, createOrEdit }: IActivityFo
         <Form.Input type="date" placeholder="Date" value={activity.date} name="date" onChange={handleInputChange} />
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
         <Form.Input placeholder="Venue" value={activity.venue} name="venue" onChange={handleInputChange} />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button loading={submitting} floated="right" positive type="submit" content="Submit" />
         <Button onClick={closeForm} floated="right" type="button" content="Cancel" />
       </Form>
     </Segment>

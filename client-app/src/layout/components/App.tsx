@@ -12,6 +12,7 @@ function App() {
   const [selectedActivity, setSelectedActivity] = useState<IActivity | undefined>(undefined)
   const [editMode, setEditMode] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [submitting, setSubmitting] = useState(false)
 
   function handleSelectActivity(id: string) {
     setSelectedActivity(activities.find((x) => x.id === id))
@@ -31,11 +32,23 @@ function App() {
   }
 
   function handleCreateOrEditActivity(activity: IActivity) {
-    activity.id
-      ? setActivities([...activities.filter((x) => x.id !== activity.id), activity])
-      : setActivities([...activities, { ...activity, id: uuid() }])
-    setEditMode(false)
-    setSelectedActivity(activity)
+    setSubmitting(true)
+    if (activity.id) {
+      ActivitiesApi.updateActivity(activity).then(() => {
+        setActivities([...activities.filter((x) => x.id !== activity.id), activity])
+        setSelectedActivity(activity)
+        setEditMode(false)
+        setSubmitting(false)
+      })
+    } else {
+      activity.id = uuid()
+      ActivitiesApi.createActivity(activity).then(() => {
+        setActivities([...activities, activity])
+        setSelectedActivity(activity)
+        setEditMode(false)
+        setSubmitting(false)
+      })
+    }
   }
 
   function handleDeleteActivity(id: string) {
@@ -72,6 +85,7 @@ function App() {
           closeForm={handleFormClose}
           createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
         />
       </Container>
     </>

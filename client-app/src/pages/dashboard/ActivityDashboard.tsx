@@ -9,6 +9,7 @@ interface IActivityDashboardProps {
   activities: IActivity[]
   selectedActivity?: IActivity
   editMode: boolean
+  submitting: boolean
   selectActivity: (id: string) => void
   cancelSelectActivity: () => void
   openForm: (id: string) => void
@@ -21,6 +22,7 @@ const ActivityDashboard = ({
   activities,
   selectedActivity,
   editMode,
+  submitting,
   selectActivity,
   cancelSelectActivity,
   openForm,
@@ -42,7 +44,12 @@ const ActivityDashboard = ({
           />
         )}
         {editMode && (
-          <ActivityForm closeForm={closeForm} selectedActivity={selectedActivity} createOrEdit={createOrEdit} />
+          <ActivityForm
+            closeForm={closeForm}
+            selectedActivity={selectedActivity}
+            createOrEdit={createOrEdit}
+            submitting={submitting}
+          />
         )}
       </Grid.Column>
     </Grid>
