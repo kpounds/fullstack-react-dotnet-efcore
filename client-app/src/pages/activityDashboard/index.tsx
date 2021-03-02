@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from "react"
-import { Grid, List } from "semantic-ui-react"
+import { Grid } from "semantic-ui-react"
 import { IActivity } from "../../models/activity"
+import ActivityList from "./components/ActivityList"
 
 interface IActivityDashboardProps {
   activities: IActivity[]
@@ -10,11 +11,7 @@ const ActivityDashboard: FunctionComponent<IActivityDashboardProps> = ({ activit
   return (
     <Grid>
       <Grid.Column width="10">
-        <List>
-          {activities.map((activity) => (
-            <List.Item key={activity.id}>{activity.title}</List.Item>
-          ))}
-        </List>
+        <ActivityList activities={activities} />
       </Grid.Column>
     </Grid>
   )
