@@ -37,7 +37,7 @@ const ActivityDashboard = ({
             openForm={openForm}
           />
         )}
-        {editMode && <ActivityForm closeForm={closeForm} activity={selectedActivity} />}
+        {editMode && <ActivityForm closeForm={closeForm} selectedActivity={selectedActivity} />}
       </Grid.Column>
     </Grid>
   )
