@@ -1,13 +1,14 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { Button, Card, Image } from "semantic-ui-react"
 import { IActivity } from "../../models/activity"
 
 interface IActivityDetailsProps {
   activity: IActivity
   cancelSelectActivity: () => void
+  openForm: (id: string) => void
 }
 
-const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity, cancelSelectActivity }) => {
+const ActivityDetails = ({ activity, cancelSelectActivity, openForm }: IActivityDetailsProps) => {
   return (
     <Card fluid>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
@@ -20,7 +21,7 @@ const ActivityDetails: FunctionComponent<IActivityDetailsProps> = ({ activity, c
       </Card.Content>
       <Card.Content extra>
         <Button.Group widths="2">
-          <Button basic color="blue" content="Edit" />
+          <Button onClick={() => openForm(activity.id)} basic color="blue" content="Edit" />
           <Button onClick={cancelSelectActivity} basic color="grey" content="Cancel" />
         </Button.Group>
       </Card.Content>

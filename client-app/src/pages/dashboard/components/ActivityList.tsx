@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react"
+import React from "react"
 import { Button, Item, Label, Segment } from "semantic-ui-react"
 import { IActivity } from "../../../models/activity"
 
@@ -7,7 +7,7 @@ interface IActivityListProps {
   selectActivity: (id: string) => void
 }
 
-const ActivityList: FunctionComponent<IActivityListProps> = ({ activities, selectActivity }) => {
+const ActivityList = ({ activities, selectActivity }: IActivityListProps) => {
   return (
     <Segment>
       <Item.Group divided>
