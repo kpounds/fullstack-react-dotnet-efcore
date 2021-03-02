@@ -5,9 +5,10 @@ import { IActivity } from "../../models/activity"
 interface IActivityFormProps {
   selectedActivity?: IActivity
   closeForm: () => void
+  createOrEdit: (activity: IActivity) => void
 }
 
-const ActivityForm = ({ selectedActivity, closeForm }: IActivityFormProps) => {
+const ActivityForm = ({ selectedActivity, closeForm, createOrEdit }: IActivityFormProps) => {
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -20,7 +21,7 @@ const ActivityForm = ({ selectedActivity, closeForm }: IActivityFormProps) => {
   const [activity, setActivity] = useState(initialState)
 
   function handleSubmit() {
-    console.log(activity)
+    createOrEdit(activity)
   }
 
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
