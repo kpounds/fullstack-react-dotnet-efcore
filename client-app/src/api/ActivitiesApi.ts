@@ -8,6 +8,11 @@ class ActivitiesApi {
     const response = await HttpAgent.get<IActivity[]>(`${ActivitiesApi.baseURL}`)
     return response
   }
+
+  public getActivityById = async (id: string) => {
+    const response = await HttpAgent.get<IActivity>(`${ActivitiesApi.baseURL}/${id}`)
+    return response
+  }
 }
 
 export default new ActivitiesApi()

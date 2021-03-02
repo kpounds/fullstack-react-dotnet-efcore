@@ -42,7 +42,12 @@ function App() {
 
   useEffect(() => {
     ActivitiesApi.getActivitiesList().then((response) => {
-      setActivities(response)
+      let activities: IActivity[] = []
+      response.forEach((activity) => {
+        activity.date = activity.date.split("T")[0]
+        activities.push(activity)
+      })
+      setActivities(activities)
     })
   }, [])
 
