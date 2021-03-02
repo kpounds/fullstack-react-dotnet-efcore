@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import "semantic-ui-css/semantic.min.css"
-import "./App/Layout/styles.css"
-import App from "./App/Layout/App"
+import "./layout/styles/styles.css"
+import App from "./layout/components/App"
 import reportWebVitals from "./reportWebVitals"
 
 ReactDOM.render(<App />, document.getElementById("root"))

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Container, List } from "semantic-ui-react"
-import { IActivity } from "../../Models/activity"
+import { Container } from "semantic-ui-react"
+import { IActivity } from "../../models/activity"
 import NavBar from "./NavBar"
+import ActivityDashboard from "../../pages/activityDashboard"
 
 function App() {
   const [activities, setActivities] = useState<IActivity[]>([])
@@ -17,11 +18,7 @@ function App() {
     <>
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
-        <List>
-          {activities.map((activity) => (
-            <List.Item key={activity.id}>{activity.title}</List.Item>
-          ))}
-        </List>
+        <ActivityDashboard activities={activities} />
       </Container>
     </>
   )
