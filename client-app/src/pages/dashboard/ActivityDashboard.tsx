@@ -10,11 +10,10 @@ import ActivityList from "./components/ActivityList"
 interface IActivityDashboardProps {
   activities: IActivity[]
   submitting: boolean
-  createOrEdit: (activity: IActivity) => void
   deleteActivity: (id: string) => void
 }
 
-const ActivityDashboard = ({ activities, submitting, createOrEdit, deleteActivity }: IActivityDashboardProps) => {
+const ActivityDashboard = ({ activities, submitting, deleteActivity }: IActivityDashboardProps) => {
   const { activityStore } = useStore()
   const { selectedActivity, editMode } = activityStore
   return (
@@ -24,7 +23,7 @@ const ActivityDashboard = ({ activities, submitting, createOrEdit, deleteActivit
       </Grid.Column>
       <Grid.Column width="6">
         {selectedActivity && !editMode && <ActivityDetails />}
-        {editMode && <ActivityForm createOrEdit={createOrEdit} submitting={submitting} />}
+        {editMode && <ActivityForm />}
       </Grid.Column>
     </Grid>
   )

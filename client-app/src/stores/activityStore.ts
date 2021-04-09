@@ -1,6 +1,7 @@
-import { makeAutoObservable } from "mobx"
+import { makeAutoObservable, runInAction } from "mobx"
 import ActivitiesApi from "../api/ActivitiesApi"
 import { IActivity } from "../models/activity"
+import { v4 as uuid } from "uuid"
 
 export default class ActivityStore {
   activities: IActivity[] = []
@@ -32,6 +33,10 @@ export default class ActivityStore {
     this.loadingInitial = state
   }
 
+  setLoading = (state: boolean) => {
+    this.loading = state
+  }
+
   selectActivity = (id: string) => {
     this.selectedActivity = this.activities.find((a) => a.id === id)
   }
@@ -47,5 +52,38 @@ export default class ActivityStore {
 
   closeForm = () => {
     this.editMode = false
+  }
+
+  createActivity = async (activity: IActivity) => {
+    this.setLoading(true)
+    activity.id = uuid()
+    try {
+      await ActivitiesApi.createActivity(activity)
+      runInAction(() => {
+        this.activities.push(activity)
+        this.selectedActivity = activity
+        this.editMode = false
+      })
+    } catch (error) {
+      console.log(error)
+    } finally {
+      this.setLoading(false)
+    }
+  }
+
+  updateActivity = async (activity: IActivity) => {
+    this.setLoading(true)
+    try {
+      await ActivitiesApi.updateActivity(activity)
+      runInAction(() => {
+        this.activities = [...this.activities.filter((a) => a.id !== activity.id), activity]
+        this.selectedActivity = activity
+        this.editMode = false
+      })
+    } catch (error) {
+      console.log(error)
+    } finally {
+      this.setLoading(false)
+    }
   }
 }
