@@ -14,7 +14,7 @@ export default class ActivityStore {
   }
 
   loadActivities = async () => {
-    this.loadingInitial = true
+    this.setLoadingInitial(true)
     try {
       const activities = await ActivitiesApi.getActivitiesList()
       activities.forEach((activity) => {
@@ -24,7 +24,11 @@ export default class ActivityStore {
     } catch (error) {
       console.log(error)
     } finally {
-      this.loadingInitial = false
+      this.setLoadingInitial(false)
     }
+  }
+
+  setLoadingInitial = (state: boolean) => {
+    this.loadingInitial = state
   }
 }
