@@ -86,4 +86,21 @@ export default class ActivityStore {
       this.setLoading(false)
     }
   }
+
+  deleteActivity = async (id: string) => {
+    this.setLoading(true)
+    try {
+      await ActivitiesApi.deleteActivity(id)
+      runInAction(() => {
+        this.activities = [...this.activities.filter((a) => a.id !== id)]
+        if (this.selectedActivity?.id === id) {
+          this.cancelSelectedActivity()
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    } finally {
+      this.setLoading(false)
+    }
+  }
 }
