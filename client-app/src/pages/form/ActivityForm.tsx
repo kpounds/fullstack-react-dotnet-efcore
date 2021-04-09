@@ -1,15 +1,18 @@
+import { observer } from "mobx-react-lite"
 import React, { ChangeEvent, useState } from "react"
 import { Button, Form, Segment } from "semantic-ui-react"
 import { IActivity } from "../../models/activity"
+import { useStore } from "../../stores/rootStore"
 
 interface IActivityFormProps {
-  selectedActivity?: IActivity
   submitting: boolean
-  closeForm: () => void
   createOrEdit: (activity: IActivity) => void
 }
 
-const ActivityForm = ({ selectedActivity, submitting, closeForm, createOrEdit }: IActivityFormProps) => {
+const ActivityForm = ({ submitting, createOrEdit }: IActivityFormProps) => {
+  const { activityStore } = useStore()
+  const { selectedActivity, closeForm } = activityStore
+
   const initialState = selectedActivity ?? {
     id: "",
     title: "",
@@ -34,12 +37,7 @@ const ActivityForm = ({ selectedActivity, submitting, closeForm, createOrEdit }:
     <Segment clearing>
       <Form onSubmit={handleSubmit} autoComplete="off">
         <Form.Input placeholder="Title" value={activity.title} name="title" onChange={handleInputChange} />
-        <Form.TextArea
-          placeholder="Description"
-          value={activity.description}
-          name="description"
-          onChange={handleInputChange}
-        />
+        <Form.TextArea placeholder="Description" value={activity.description} name="description" onChange={handleInputChange} />
         <Form.Input placeholder="Category" value={activity.category} name="category" onChange={handleInputChange} />
         <Form.Input type="date" placeholder="Date" value={activity.date} name="date" onChange={handleInputChange} />
         <Form.Input placeholder="City" value={activity.city} name="city" onChange={handleInputChange} />
@@ -51,4 +49,4 @@ const ActivityForm = ({ selectedActivity, submitting, closeForm, createOrEdit }:
   )
 }
 
-export default ActivityForm
+export default observer(ActivityForm)
