@@ -1,14 +1,31 @@
 import { observer } from "mobx-react-lite"
-import React from "react"
+import { useEffect } from "react"
+import { useParams } from "react-router"
 import { Button, Card, Image } from "semantic-ui-react"
 import LoadingComponent from "../../layout/components/LoadingComponent"
 import { useStore } from "../../stores/rootStore"
 
 const ActivityDetails = () => {
   const { activityStore } = useStore()
-  const { selectedActivity: activity } = activityStore
+  const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore
+  const { id } = useParams<{ id: string }>()
 
-  if (!activity) return <LoadingComponent />
+  useEffect(() => {
+    if (id) {
+      loadActivity(id)
+    }
+  }, [id, loadActivity])
+
+  if (loadingInitial) {
+    return <LoadingComponent />
+  }
+
+  if (!activity)
+    return (
+      <Card>
+        <Card.Content>No Activity Found!</Card.Content>
+      </Card>
+    )
 
   return (
     <Card fluid>

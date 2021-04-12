@@ -19,6 +19,7 @@ export default class ActivityStore {
   }
 
   loadActivities = async () => {
+    this.setLoadingInitial(true)
     try {
       const activities = await ActivitiesApi.getActivitiesList()
       activities.forEach((activity) => {
@@ -40,6 +41,7 @@ export default class ActivityStore {
       try {
         activity = await ActivitiesApi.getActivityDetails(id)
         this.setActivity(activity)
+        this.setSelectedActivity(activity)
       } catch (error) {
         console.log(error)
       } finally {
@@ -63,6 +65,10 @@ export default class ActivityStore {
 
   setLoading = (state: boolean) => {
     this.loading = state
+  }
+
+  setSelectedActivity = (activity: IActivity) => {
+    this.selectedActivity = activity
   }
 
   createActivity = async (activity: IActivity) => {
