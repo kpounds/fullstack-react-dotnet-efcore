@@ -1,13 +1,14 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Button, Card, Image } from "semantic-ui-react"
+import LoadingComponent from "../../layout/components/LoadingComponent"
 import { useStore } from "../../stores/rootStore"
 
 const ActivityDetails = () => {
   const { activityStore } = useStore()
   const { selectedActivity: activity, openForm, cancelSelectedActivity } = activityStore
 
-  if (!activity) return null
+  if (!activity) return <LoadingComponent />
 
   return (
     <Card fluid>

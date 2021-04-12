@@ -5,6 +5,7 @@ import { Route } from "react-router"
 import HomePage from "../../pages/home/HomePage"
 import ActivityDashboard from "../../pages/dashboard/ActivityDashboard"
 import ActivityForm from "../../pages/form/ActivityForm"
+import ActivityDetails from "../../pages/details/ActivityDetails"
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <NavBar />
       <Container style={{ marginTop: "7em" }}>
         <Route exact path="/" component={HomePage} />
-        <Route path="/activities" component={ActivityDashboard} />
+        <Route exact path="/activities" component={ActivityDashboard} />
+        <Route path="/activities/:id" component={ActivityDetails} />
         <Route path="/createActivity" component={ActivityForm} />
       </Container>
     </>
