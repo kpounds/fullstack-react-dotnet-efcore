@@ -36,12 +36,14 @@ export default class ActivityStore {
     let activity = this.getActivity(id)
     if (activity) {
       this.selectedActivity = activity
+      return activity
     } else {
       this.setLoadingInitial(true)
       try {
         activity = await ActivitiesApi.getActivityDetails(id)
         this.setActivity(activity)
         this.setSelectedActivity(activity)
+        return activity
       } catch (error) {
         console.log(error)
       } finally {

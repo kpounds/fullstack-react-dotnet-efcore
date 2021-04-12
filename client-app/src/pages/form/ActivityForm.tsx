@@ -1,22 +1,15 @@
 import { observer } from "mobx-react-lite"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
+import { useParams } from "react-router"
 import { Button, Form, Segment } from "semantic-ui-react"
+import LoadingComponent from "../../layout/components/LoadingComponent"
 import { useStore } from "../../stores/rootStore"
 
 const ActivityForm = () => {
   const { activityStore } = useStore()
-  const { selectedActivity, createActivity, updateActivity, loading } = activityStore
-
-  const initialState = selectedActivity ?? {
-    id: "",
-    title: "",
-    category: "",
-    description: "",
-    date: "",
-    city: "",
-    venue: "",
-  }
-  const [activity, setActivity] = useState(initialState)
+  const { createActivity, updateActivity, loading, loadActivity, loadingInitial } = activityStore
+  const { id } = useParams<{ id: string }>()
+  const [activity, setActivity] = useState({ id: "", title: "", category: "", description: "", date: "", city: "", venue: "" })
 
   function handleSubmit() {
     activity.id ? updateActivity(activity) : createActivity(activity)
@@ -25,6 +18,16 @@ const ActivityForm = () => {
   function handleInputChange(event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = event.target
     setActivity({ ...activity, [name]: value })
+  }
+
+  useEffect(() => {
+    if (id) {
+      loadActivity(id).then((activity) => setActivity(activity!))
+    }
+  }, [id, loadActivity])
+
+  if (loadingInitial) {
+    return <LoadingComponent content="Loading activity..." />
   }
 
   return (
