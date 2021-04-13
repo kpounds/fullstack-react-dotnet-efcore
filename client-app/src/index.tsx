@@ -5,10 +5,13 @@ import "./layout/styles/styles.css"
 import App from "./layout/components/App"
 import reportWebVitals from "./reportWebVitals"
 import { RootStore, RootStoreContext } from "./stores/rootStore"
+import { BrowserRouter } from "react-router-dom"
 
 ReactDOM.render(
   <RootStoreContext.Provider value={RootStore}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </RootStoreContext.Provider>,
   document.getElementById("root")
 )
